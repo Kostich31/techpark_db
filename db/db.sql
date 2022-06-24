@@ -37,7 +37,7 @@ CREATE UNLOGGED TABLE thread (
                         FOREIGN KEY (forum)  REFERENCES "forum" (slug)
 );
 
-CREATE unlogged TABLE users_forum (
+CREATE UNLOGGED TABLE users_forum (
                              nickname CITEXT NOT NULL,
                              slug CITEXT NOT NULL,
                              FOREIGN KEY (nickname) REFERENCES users(nickname),
@@ -179,16 +179,9 @@ CREATE TRIGGER after_insert_thread
     FOR EACH ROW
     EXECUTE PROCEDURE increment_counter_threads();
 
-CREATE INDEX IF NOT EXISTS idx_users_nickname ON users (nickname);
-CREATE INDEX IF NOT EXISTS idx_users_email ON users (email);
-
-CREATE INDEX IF NOT EXISTS idx_forum_slug ON forum (slug);
-
-CREATE INDEX IF NOT EXISTS idx_thread_slug ON thread (slug);
 CREATE INDEX IF NOT EXISTS idx_thread_forum ON thread (forum);
 CREATE INDEX IF NOT EXISTS idx_thread_created ON thread (created);
 
-CREATE INDEX IF NOT EXISTS idx_users_forum_nickname_slug ON users_forum(nickname, slug);
 CREATE INDEX IF NOT EXISTS idx_users_forum_nickname ON users_forum(nickname);
 CREATE INDEX IF NOT EXISTS idx_users_forum_slug ON users_forum(slug);
 
